@@ -12,8 +12,8 @@ int		ft_puts(const char *s) {
 
 const char *err = "Error: Operation file corrupted\n";
 struct {
-	int		w;
-	int		h;
+	int		w,
+			h;
 	char	b;
 	char	ps[300][302];
 }	z;
@@ -24,8 +24,25 @@ struct {
 	float	r;
 	char	c;
 }	cr;
+int x, y;
 FILE *f;
+int	is_in_cr()
+{
+	float	d = sqrt(powf(x - cr.x, 2) + powf(y - cr.y, 2));
+	if (d > cr.r)
+		return 0;
+	if (cr.c == 'c' && cr.r - d > 1)
+		return 0;
+	return 1;
 
+}
+void draw()
+{
+	for(y = 0; y < z.h; y++)
+		for (x = 0; x < z.w; x++)
+			if (is_in_cr())
+				z.ps[y][x] = cr.c;
+}
 int		main(int ac, char *av[]) {
 	if (ac != 2)
 		return ft_puts("Error: argument\n");
@@ -43,7 +60,9 @@ int		main(int ac, char *av[]) {
 	while ((r = fscanf(f, "%c %f %f %f %c\n", &cr.t, &cr.x, &cr.y, &cr.r, &cr.c))
 		== 5)
 	{
-		//draw();
+		if (cr.t != 'c' && cr.t!='C' || cr.r <= 0)
+			return ft_puts(err);
+		draw();
 	}
 	if (r != EOF)
 	 	return ft_puts(err);
