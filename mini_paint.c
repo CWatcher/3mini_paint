@@ -8,24 +8,21 @@ int		ft_puts(const char *s) {
 		write(1, s, 1);
 	return 1;
 }
-
 const char *err = "Error: Operation file corrupted\n";
+FILE *f;
 struct {
-	int		w,
-			h;
+	int		w, h;
 	char	b;
-	char	ps[300][302];
+	char	ss[300][302];
 }	z;
 struct {
 	char	t;
-	float	x;
-	float	y;
-	float	r;
+	float	x, y, r;
 	char	c;
 }	cr;
 int x, y;
-FILE *f;
-int	is_in_cr()
+
+int		is_in_cr()
 {
 	float	d = sqrt(powf(x - cr.x, 2) + powf(y - cr.y, 2));
 	if (d > cr.r)
@@ -33,14 +30,13 @@ int	is_in_cr()
 	if (cr.t == 'c' && cr.r - d >= 1)
 		return 0;
 	return 1;
-
 }
-void draw()
+void	draw()
 {
 	for(y = 0; y < z.h; y++)
 		for (x = 0; x < z.w; x++)
 			if (is_in_cr())
-				z.ps[y][x] = cr.c;
+				z.ss[y][x] = cr.c;
 }
 int		main(int ac, char *av[]) {
 	if (ac != 2)
@@ -51,9 +47,9 @@ int		main(int ac, char *av[]) {
 		|| z.w < 0 || z.w > 300 || z.h < 0 || z.h > 300)
 		return ft_puts(err);
 	for (int i = 0; i < z.h; i++) {
-		memset(z.ps[i], z.b, z.w);
-		z.ps[i][z.w] = '\n';
-		z.ps[i][z.w + 1] = '\0';
+		memset(z.ss[i], z.b, z.w);
+		z.ss[i][z.w] = '\n';
+		z.ss[i][z.w + 1] = '\0';
 	}
 	int r;
 	while ((r = fscanf(f, "%c %f %f %f %c\n", &cr.t, &cr.x, &cr.y, &cr.r, &cr.c))
@@ -66,5 +62,5 @@ int		main(int ac, char *av[]) {
 	if (r != EOF)
 	 	return ft_puts(err);
 	for (int i = 0; i < z.h; i++)
-		ft_puts(z.ps[i]);
+		ft_puts(z.ss[i]);
 }
