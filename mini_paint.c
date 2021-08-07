@@ -31,7 +31,7 @@ int	is_in_cr()
 	float	d = sqrt(powf(x - cr.x, 2) + powf(y - cr.y, 2));
 	if (d > cr.r)
 		return 0;
-	if (cr.c == 'c' && cr.r - d > 1)
+	if (cr.c == 'c' && cr.r - d >= 1)
 		return 0;
 	return 1;
 
@@ -60,7 +60,7 @@ int		main(int ac, char *av[]) {
 	while ((r = fscanf(f, "%c %f %f %f %c\n", &cr.t, &cr.x, &cr.y, &cr.r, &cr.c))
 		== 5)
 	{
-		if (cr.t != 'c' && cr.t!='C' || cr.r <= 0)
+		if ((cr.t != 'c' && cr.t!='C') || cr.r <= 0)
 			return ft_puts(err);
 		draw();
 	}
