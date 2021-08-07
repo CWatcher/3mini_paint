@@ -31,7 +31,7 @@ int	is_in_cr()
 	float	d = sqrt(powf(x - cr.x, 2) + powf(y - cr.y, 2));
 	if (d > cr.r)
 		return 0;
-	if (cr.c == 'c' && cr.r - d >= 1)
+	if (cr.t == 'c' && cr.r - d >= 1)
 		return 0;
 	return 1;
 
